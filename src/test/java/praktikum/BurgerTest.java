@@ -1,5 +1,6 @@
 package praktikum;
 
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -22,14 +23,14 @@ public class BurgerTest {
     }
 
     @Test
-    public void setBuns() {
+    public void setBunsTest() {
         Burger burger = new Burger();
         burger.setBuns(new Bun("bun1", 10.0f));
         assertNotNull(burger.bun);
     }
 
     @Test
-    public void addIngredient() {
+    public void addIngredientTest() {
         Burger burger = new Burger();
         Ingredient ingredient = new Ingredient(IngredientType.SAUCE, "test", 10.0f);
         burger.addIngredient(ingredient);
@@ -37,7 +38,7 @@ public class BurgerTest {
     }
 
     @Test
-    public void removeIngredient() {
+    public void removeIngredientTest() {
         Burger burger = new Burger();
         Ingredient i1 = new Ingredient(IngredientType.SAUCE, "test1", 10.0f);
         Ingredient i2 = new Ingredient(IngredientType.FILLING, "test2", 15.0f);
@@ -47,12 +48,14 @@ public class BurgerTest {
         burger.addIngredient(i3);
 
         burger.removeIngredient(0);
-        assertEquals(2, burger.ingredients.size());
-        assertEquals(i2, burger.ingredients.get(0));
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(2).isEqualTo(burger.ingredients.size());
+        softAssertions.assertThat(i2).isEqualTo(burger.ingredients.get(0));
+        softAssertions.assertAll();
     }
 
     @Test
-    public void moveIngredient() {
+    public void moveIngredientTest() {
         Burger burger = new Burger();
         Ingredient i1 = new Ingredient(IngredientType.SAUCE, "test1", 10.0f);
         Ingredient i2 = new Ingredient(IngredientType.FILLING, "test2", 15.0f);
@@ -64,17 +67,19 @@ public class BurgerTest {
         burger.addIngredient(i4);
 
         burger.moveIngredient(1, 3);
-        assertEquals(4, burger.ingredients.size());
-        assertEquals(i2, burger.ingredients.get(3));
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(4).isEqualTo(burger.ingredients.size());
+        softAssertions.assertThat(i2).isEqualTo(burger.ingredients.get(3));
+        softAssertions.assertAll();
     }
 
     @Test
-    public void getPrice() {
+    public void getPriceTest() {
         assertEquals(price, burger.getPrice(), 0.0001);
     }
 
     @Test
-    public void getReceipt() {
+    public void getReceiptTest() {
         Burger burger = new Burger();
         burger.setBuns(new Bun("bun1", 5.0f));
         Ingredient i1 = new Ingredient(IngredientType.SAUCE, "test1", 10.0f);
